@@ -1,0 +1,23 @@
+class Program{
+    static async Task Main()    {
+        Console.WriteLine("Ресторан открыт!");        Thread shavermaTask = new Thread(() => cooks(7000, "Шавуху"));
+        Thread steakTask = new Thread(() => cooks(5000, "Стейк"));
+        shavermaTask.Start();
+        steakTask.Start();        await TakeOrders();
+        shavermaTask.Join();        steakTask.Join();
+      
+       
+        Console.WriteLine("Ресторан закрылся");    }
+    static async Task TakeOrders()    {
+        for (int i = 1; i <= 3; i++)        {
+            Console.WriteLine($"Принимаем заказ {i}...");            await Task.Delay(1000);
+            Console.WriteLine($"Заказ {i} принят!");
+        }
+    }    
+
+    static void cooks(int sec, string eat)
+    {
+        Console.WriteLine($"Готовим {eat}");        Thread.Sleep(sec);
+        Console.WriteLine($"{eat} готова");    }
+
+}
